@@ -8,17 +8,40 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { colors } from "../colors";
+import { auth, signIn, signUp } from "../firebase";
+
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [accountExist, setAccountState ]= useState(false)
 
+  async function go(){
+    navigation.navigate('Main')
 
-  const handleSignIn = ()=>{
-    navigation.navigate("Home")
   }
+  async function handleSignUp() {
+    signUp(email, password)
+      .then((userCreds) => {
+        const user = userCreds.user;
+        navigation.navigate('Main')
+
+        console.log("Account created for : ", user.email);
+      })
+      .catch((error) => alert(error.message));
+  }
+  const handleSignIn = () => {
+    signIn(email, password)
+      .then((userCreds) => {
+        const user = userCreds.user;
+        console.log("Logged in as : ", user.email);
+        navigation.navigate('Main')
+        setAccountState(true)
+      })
+      .catch((error) => alert(error.message));
+  };
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Text style={styles.head}>Sign Up</Text>
+      <Text style={styles.head}>Sign Up</Text>
       <View style={styles.inputContainer}>
         {/*component and styles for Email field */}
         <TextInput
@@ -37,16 +60,19 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleSignIn} style={styles.button}>
+        <TouchableOpacity onPress={go} style={styles.button}>
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
         {/* ============================================== */}
         <TouchableOpacity
-          onPress={() => {}}
+         onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity>
+        {(accountExist) ? <Text style={styles.warningText}>
+          Account does not exist
+        </Text> : <Text></Text>}
       </View>
     </KeyboardAvoidingView>
   );
@@ -55,8 +81,9 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  head:{
+  head: {
     color: colors.primaryColor,
+    fontFamily: "SSBold",
     fontWeight: "700",
     fontSize: 45,
   },
@@ -100,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   buttonOutlineText: {
-    color:colors.primaryColor ,
+    color: colors.primaryColor,
     fontWeight: "700",
     fontSize: 16,
   },
