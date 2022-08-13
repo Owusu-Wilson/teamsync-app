@@ -8,8 +8,6 @@ import { Button, Image, StyleSheet,Text, View, TouchableOpacity, useColorScheme 
  */
 function LargeButton(props) {
 
-
-
     return (
 
         <TouchableOpacity
@@ -30,6 +28,7 @@ function LargeButton(props) {
         </TouchableOpacity>
     );
 }
+// ====================================================================
 
 export default LargeButton;
 

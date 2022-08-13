@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ImageBackground,
-  Button
+  Button,
 } from "react-native";
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from "react";
 import moment from "moment";
 import { colors } from "../colors";
 import LargeButton from "../components/Card";
+import InfoCard from "../components/InfoCard";
 function setPeriodOfDay() {
   if (moment().hour() >= 0 && moment().hour() < 11) {
     return "Morning";
@@ -27,11 +28,12 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Text style={styles.headerText}>Good {periodOfDay}</Text>
       <View style={styles.cardsContainer}>
-      {/* Create forms Button */}
-      <LargeButton type='m' iconName='account-multiple-plus' primaryText='Join a Team' secondaryText='Join an ongoing data team  ' eventHandler={() => { navigation.navigate("JoinTeam") }} />
+        {/* Create forms Button */}
+        {/* <LargeButton type='m' iconName='account-multiple-plus' primaryText='Join a Team' secondaryText='Join an ongoing data team  ' eventHandler={() => { navigation.navigate("JoinTeam") }} />
       <LargeButton type='m' iconName='account-group' primaryText='Create a Team' secondaryText='Create your own data team  ' eventHandler={() => { navigation.navigate("CreateTeam") }} />
-      <LargeButton type='m' iconName='code-braces-box' primaryText='Admin Tools' secondaryText='Tools to manage your teams' eventHandler={() => { console.warn("here") }} />
-    </View>
+      <LargeButton type='m' iconName='code-braces-box' primaryText='Admin Tools' secondaryText='Tools to manage your teams' eventHandler={() => { console.warn("here") }} /> */}
+        <InfoCard />
+      </View>
     </View>
   );
 };
@@ -46,9 +48,9 @@ const styles = StyleSheet.create({
   },
   cardsContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
+    alignContent: "center",
   },
 
   butomContainer: {
